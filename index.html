@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CalmSense — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b0f1a;
+      --panel:     #111827;
+      --border:    #1e2a3a;
+      --accent:    #3b82f6;
+      --accent2:   #6366f1;
+      --teal:      #14b8a6;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --danger:    #ef4444;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* animated bg */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18;
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 420px; height: 420px; background: #3b82f6; top: -120px; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 360px; height: 360px; background: #6366f1; bottom: -80px; right: -80px; animation-delay: -4s; }
+    .orb-3 { width: 200px; height: 200px; background: #14b8a6; top: 50%; left: 55%; animation-delay: -7s; }
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.08); }
+    }
+
+    .login-wrap {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 60px;
+      padding: 40px;
+    }
+
+    /* branding side */
+    .brand-side {
+      max-width: 340px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 28px;
+    }
+    .logo-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 24px; height: 24px; }
+    .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; }
+    .logo-text span { color: var(--teal); }
+
+    .brand-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem; font-weight: 700; line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .brand-heading em { font-style: normal; color: var(--accent); }
+    .brand-sub {
+      color: var(--muted); font-size: 0.95rem; line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .stats-row { display: flex; gap: 24px; }
+    .stat {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 20px;
+    }
+    .stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--teal); }
+    .stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    /* divider */
+    .divider { width: 1px; height: 360px; background: var(--border); }
+
+    /* card */
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 380px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem; font-weight: 600; margin-bottom: 6px;
+    }
+    .card-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 32px; }
+
+    .field { margin-bottom: 20px; }
+    label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
+    input {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px; color: var(--text);
+      font-size: 0.95rem; font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+    }
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    input::placeholder { color: var(--muted); }
+
+    .remember-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .remember-row label {
+      display: flex; align-items: center; gap: 8px;
+      text-transform: none; letter-spacing: 0; font-size: 0.87rem; color: var(--text); cursor: pointer;
+    }
+    input[type="checkbox"] {
+      width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer;
+    }
+    .forgot { font-size: 0.83rem; color: var(--accent); text-decoration: none; }
+    .forgot:hover { text-decoration: underline; }
+
+    .btn {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600;
+      color: #fff; cursor: pointer; letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.1s;
+      position: relative; overflow: hidden;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:active { transform: scale(0.98); }
+    .btn .spinner {
+      display: none; width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white; border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-msg {
+      display: none; color: var(--danger); font-size: 0.82rem;
+      margin-bottom: 16px; padding: 10px 14px;
+      background: rgba(239,68,68,0.08); border-radius: 8px; border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    .signup-row { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--muted); }
+    .signup-row a { color: var(--accent); text-decoration: none; }
+    .signup-row a:hover { text-decoration: underline; }
+
+    /* pulse indicator */
+    .pulse-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--teal); margin-right: 6px;
+      animation: pulse-glow 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(20,184,166,0.5); }
+      50%      { box-shadow: 0 0 0 6px rgba(20,184,166,0); }
+    }
+    .live-tag { font-size: 0.78rem; color: var(--teal); }
+
+    @media (max-width: 768px) {
+      .login-wrap { flex-direction: column; gap: 32px; padding: 20px; }
+      .brand-side { max-width: 100%; }
+      .divider { display: none; }
+      .card { width: 100%; max-width: 380px; }
+      .brand-heading { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="login-wrap">
+  <!-- Brand Side -->
+  <div class="brand-side">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <div class="logo-text">Calm<span>Sense</span></div>
+    </div>
+
+    <h1 class="brand-heading">
+      Real-time <em>stress</em> &amp;<br>anxiety monitoring
+    </h1>
+    <p class="brand-sub">
+      IoT-powered biometric tracking that watches over your wellbeing — heart rate, skin conductance, SpO₂, and temperature, all in one place.
+    </p>
+
+    <div style="margin-bottom: 20px;">
+      <span class="pulse-dot"></span>
+      <span class="live-tag">Live sensor data streaming</span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-val">4</div>
+        <div class="stat-lbl">Parameters</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">1 Hz</div>
+        <div class="stat-lbl">Update rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">24/7</div>
+        <div class="stat-lbl">Monitoring</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Login Card -->
+  <div class="card">
+    <div class="card-title">Sign in</div>
+    <div class="card-sub">Access your health dashboard</div>
+
+    <div class="error-msg" id="errorMsg">Invalid credentials. Try <strong>admin / admin123</strong></div>
+
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="username" placeholder="e.g. admin" autocomplete="username"/>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+
+    <div class="remember-row">
+      <label>
+        <input type="checkbox" id="remember"> Keep me signed in
+      </label>
+      <a href="#" class="forgot">Forgot password?</a>
+    </div>
+
+    <p class="error-msg" id="errorMsg2" style="display:none"></p>
+
+    <button class="btn" id="loginBtn" onclick="doLogin()">
+      <span id="btnText">Sign in to Dashboard</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+
+    <div class="signup-row">
+      Don't have an account? <a href="#">Request access</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function checkAuth() {
+    try {
+      const response = await fetch('/api/auth');
+      if (!response.ok) return;
+      const payload = await response.json();
+      if (payload.authenticated) {
+        window.location.href = 'dashboard.html';
+      }
+    } catch (err) {
+      console.error('Auth check failed:', err);
+    }
+  }
+
+  checkAuth();
+
+  async function doLogin() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value.trim();
+    const errDiv = document.getElementById('errorMsg');
+    const btn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+
+    errDiv.style.display = 'none';
+    if (!u || !p) {
+      errDiv.textContent = 'Please enter both username and password.';
+      errDiv.style.display = 'block';
+      return;
+    }
+
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+      errDiv.textContent = result.message || 'Invalid credentials. Use: admin / admin123';
+      errDiv.style.display = 'block';
+    } catch (error) {
+      errDiv.textContent = 'Unable to reach the server. Please try again.';
+      errDiv.style.display = 'block';
+      console.error(error);
+    } finally {
+      btnText.style.display = 'block';
+      spinner.style.display = 'none';
+      btn.disabled = false;
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });

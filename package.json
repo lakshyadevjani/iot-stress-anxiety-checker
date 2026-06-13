@@ -1,0 +1,14 @@
+{
+  "name": "calmsense-backend",
+  "version": "1.0.0",
+  "description": "CalmSense static dashboard backend for storing sensor data and serving the frontend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  }
+}
