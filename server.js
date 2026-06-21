@@ -127,8 +127,10 @@ app.post('/api/login', (req, res) => {
   if (expected && password === expected) {
     req.session.authenticated = true;
     req.session.user = username;
+    console.log('Login OK:', username, 'sessionID=', req.sessionID);
     return res.json({ success: true, user: username });
   }
+  console.log('Login failed for', username);
   res.status(401).json({ success: false, message: 'Invalid credentials' });
 });
 
@@ -139,7 +141,13 @@ app.post('/api/logout', requireAuth, (req, res) => {
 });
 
 app.get('/api/auth', (req, res) => {
+  console.log('/api/auth sessionID=', req.sessionID, 'authenticated=', !!req.session.authenticated);
   res.json({ authenticated: !!req.session.authenticated, user: req.session.user || null });
+});
+
+// Debug route (temporary) to inspect session contents and session id
+app.get('/debug/session', (req, res) => {
+  res.json({ sessionID: req.sessionID, session: req.session || null, cookies: req.headers.cookie || null });
 });
 
 app.get('/api/readings', requireAuth, (req, res) => {
