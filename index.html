@@ -261,7 +261,7 @@
 
     <p class="error-msg" id="errorMsg2" style="display:none"></p>
 
-    <button class="btn" id="loginBtn" onclick="doLogin()">
+    <button class="btn" id="loginBtn">
       <span id="btnText">Sign in to Dashboard</span>
       <div class="spinner" id="spinner"></div>
     </button>
@@ -330,6 +330,8 @@
       btn.disabled = false;
     }
   }
+
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter') doLogin();
