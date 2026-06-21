@@ -275,7 +275,7 @@
 <script>
   async function checkAuth() {
     try {
-      const response = await fetch('/api/auth');
+      const response = await fetch('/api/auth', { credentials: 'include' });
       if (!response.ok) return;
       const payload = await response.json();
       if (payload.authenticated) {
@@ -311,6 +311,7 @@
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ username: u, password: p })
       });
       const result = await response.json();
