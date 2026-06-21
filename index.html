@@ -187,89 +187,49 @@
   </style>
 </head>
 <body>
+<div class="app-bg">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
 
-<div class="bg-orbs">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-</div>
-
-<div class="login-wrap">
-  <!-- Brand Side -->
-  <div class="brand-side">
-    <div class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-        </svg>
+  <main class="mobile-center">
+    <section class="glass-card login-card" role="form" aria-label="Login">
+      <div class="avatar-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M20 21v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1"/></svg>
       </div>
-      <div class="logo-text">Calm<span>Sense</span></div>
-    </div>
+      <h2 class="card-head">Welcome back</h2>
+      <p class="card-sub">Sign in to view your wellbeing dashboard</p>
 
-    <h1 class="brand-heading">
-      Real-time <em>stress</em> &amp;<br>anxiety monitoring
-    </h1>
-    <p class="brand-sub">
-      IoT-powered biometric tracking that watches over your wellbeing — heart rate, skin conductance, SpO₂, and temperature, all in one place.
-    </p>
-
-    <div style="margin-bottom: 20px;">
-      <span class="pulse-dot"></span>
-      <span class="live-tag">Live sensor data streaming</span>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-val">4</div>
-        <div class="stat-lbl">Parameters</div>
+      <div class="form-row">
+        <label class="input-pill">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input id="username" type="text" placeholder="Username" autocomplete="username" />
+        </label>
       </div>
-      <div class="stat">
-        <div class="stat-val">1 Hz</div>
-        <div class="stat-lbl">Update rate</div>
+
+      <div class="form-row">
+        <label class="input-pill">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+        </label>
       </div>
-      <div class="stat">
-        <div class="stat-val">24/7</div>
-        <div class="stat-lbl">Monitoring</div>
+
+      <div class="row-between small-row">
+        <label class="remember"><input id="remember" type="checkbox"> Remember me</label>
+        <a class="forgot" href="#">Forgot Password?</a>
       </div>
-    </div>
-  </div>
 
-  <div class="divider"></div>
+      <div id="errorMsg" class="error-msg">Invalid credentials. Try <strong>admin / admin123</strong></div>
 
-  <!-- Login Card -->
-  <div class="card">
-    <div class="card-title">Sign in</div>
-    <div class="card-sub">Access your health dashboard</div>
-
-    <div class="error-msg" id="errorMsg">Invalid credentials. Try <strong>admin / admin123</strong></div>
-
-    <div class="field">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="e.g. admin" autocomplete="username"/>
-    </div>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
-    </div>
-
-    <div class="remember-row">
-      <label>
-        <input type="checkbox" id="remember"> Keep me signed in
-      </label>
-      <a href="#" class="forgot">Forgot password?</a>
-    </div>
-
-    <p class="error-msg" id="errorMsg2" style="display:none"></p>
-
-    <button class="btn" id="loginBtn">
-      <span id="btnText">Sign in to Dashboard</span>
-      <div class="spinner" id="spinner"></div>
-    </button>
-
-    <div class="signup-row">
-      Don't have an account? <a href="#">Request access</a>
-    </div>
-  </div>
+      <button class="cta-btn" id="loginBtn">
+        <span id="btnText">LOGIN</span>
+      </button>
+    </section>
+  </main>
 </div>
 
 <script>
@@ -342,5 +302,32 @@
   // Attach click listener to login button
   document.getElementById('loginBtn').addEventListener('click', doLogin);
 </script>
-</body>
+<style>
+  /* Glassmorphism mobile styles */
+  :root{--g1:#2da9f7;--g2:#c43bfc;--g3:#14b8a6;--navy:#0b1530}
+  html,body{height:100%}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#fff;background:linear-gradient(135deg,var(--g1) 0%,#c93fb6 45%,var(--g3) 100%);-webkit-font-smoothing:antialiased}
+  .app-bg{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.24}
+  .b1{width:420px;height:420px;left:-80px;top:-120px;background:rgba(59,130,246,0.9)}
+  .b2{width:360px;height:360px;right:-60px;top:-100px;background:rgba(196,59,252,0.85)}
+  .b3{width:280px;height:280px;left:40%;bottom:-80px;background:rgba(20,184,166,0.9)}
+  .mobile-center{width:100%;max-width:420px}
+  .glass-card{backdrop-filter: blur(12px) saturate(120%);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(2,6,23,0.5)}
+  .login-card{text-align:center}
+  .avatar-placeholder{width:84px;height:84px;border-radius:50%;margin:0 auto 12px;background:linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));display:flex;align-items:center;justify-content:center}
+  .card-head{margin:0 0 6px;font-weight:700}
+  .card-sub{margin:0 0 16px;color:rgba(255,255,255,0.8);font-size:0.95rem}
+  .input-pill{display:flex;align-items:center;background:linear-gradient(90deg,rgba(59,130,246,0.15),rgba(59,130,246,0.06));padding:10px;border-radius:999px;border:1px solid rgba(255,255,255,0.06)}
+  .input-pill .icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-right:8px}
+  .input-pill input{flex:1;background:transparent;color:#fff;border:0;outline:none;padding:8px 6px;font-size:1rem}
+  .row-between{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+  .small-row{font-size:0.88rem;color:rgba(255,255,255,0.9)}
+  .remember input{margin-right:8px}
+  .forgot{color:rgba(255,255,255,0.9);text-decoration:underline}
+  .cta-btn{margin-top:18px;width:100%;padding:14px;border-radius:999px;border:0;background:linear-gradient(90deg,var(--navy),#2b3d6a);color:#fff;font-weight:700;letter-spacing:0.04em;box-shadow:0 8px 24px rgba(11,21,48,0.45)}
+  .error-msg{display:none;margin-top:12px;padding:10px;border-radius:10px;background:rgba(239,68,68,0.08);color:#ffdddd}
+  #errorMsg[style*="display:block"], #errorMsg[style*="display: block"] {display:block}
+  @media (max-width:420px){.mobile-center{padding:0 8px}}
+</style>
 </html>
