@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,15 +8,35 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const DATA_FILE = path.join(__dirname, 'data.json');
 const SESSION_SECRET = process.env.SESSION_SECRET || 'calmsense-secret';
+const MONGODB_URI = process.env.MONGODB_URI || null;
 
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
+
+// Setup session store
+const sessionConfig = {
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}));
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000
+  }
+};
+
+if (MONGODB_URI) {
+  sessionConfig.store = MongoStore.create({
+    mongoUrl: MONGODB_URI,
+    touchAfter: 24 * 3600
+  });
+  console.log('✓ Using MongoDB for session store');
+} else {
+  console.log('⚠ Using in-memory session store (sessions will not persist across restarts)');
+}
+
+app.use(session(sessionConfig));
 
 function loadData() {
   try {
