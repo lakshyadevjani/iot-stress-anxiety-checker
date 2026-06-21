@@ -261,7 +261,7 @@
 
     <p class="error-msg" id="errorMsg2" style="display:none"></p>
 
-    <button class="btn" id="loginBtn" onclick="doLogin()">
+    <button class="btn" id="loginBtn">
       <span id="btnText">Sign in to Dashboard</span>
       <div class="spinner" id="spinner"></div>
     </button>
@@ -308,22 +308,26 @@
     btn.disabled = true;
 
     try {
+      console.log('Sending login request to /api/login with:', { username: u });
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: u, password: p })
       });
+      console.log('Login response status:', response.status);
       const result = await response.json();
+      console.log('Login response data:', result);
       if (response.ok && result.success) {
+        console.log('Login successful! Redirecting to dashboard...');
         window.location.href = 'dashboard.html';
         return;
       }
       errDiv.textContent = result.message || 'Invalid credentials. Use: admin / admin123';
       errDiv.style.display = 'block';
     } catch (error) {
+      console.error('Login error:', error);
       errDiv.textContent = 'Unable to reach the server. Please try again.';
       errDiv.style.display = 'block';
-      console.error(error);
     } finally {
       btnText.style.display = 'block';
       spinner.style.display = 'none';
@@ -334,3 +338,9 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter') doLogin();
   });
+
+  // Attach click listener to login button
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+</script>
+</body>
+</html>
